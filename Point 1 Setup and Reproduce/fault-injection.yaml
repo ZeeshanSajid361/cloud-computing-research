@@ -1,0 +1,16 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: Schedule
+metadata:
+  name: primary-node-kill-schedule
+  namespace: default
+spec:
+  schedule: '@every 120s'
+  type: PodChaos
+  concurrencyPolicy: Forbid
+  podChaos:
+    action: pod-kill
+    mode: one
+    selector:
+      labelSelectors:
+        app: edge-primary
+    duration: '10s'
