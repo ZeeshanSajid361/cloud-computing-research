@@ -37,7 +37,10 @@ All arms execute identical Python synchronization logic with atomic file swaps (
 | Static Best-Static | 0.5 s fixed | ~0.60% | Consistent low staleness |
 | Adaptive Scheduler | 0.05 s–5.0 s dynamic | 0.83% (down to 0.56% under burst) | Low staleness, adapted overhead |
 
+![Preliminary Results](results/d2_preliminary_results.png)
+
 Reduction in state loss from the 30 s static baseline to the adaptive scheduler:
+
 - 14.77% down to 0.83%
 - Relative state loss reduction: **94.4%**
 
