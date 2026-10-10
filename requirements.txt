@@ -1,0 +1,13 @@
+# Cloud Computing Research - Python Requirements
+#
+# All scripts (app_fixed.py, adaptive_sync_fixed.py, analyze_loss.py)
+# use only Python 3.9+ standard library modules:
+# - json
+# - math
+# - os
+# - shutil
+# - statistics
+# - sys
+# - time
+#
+# No external third-party dependencies are required.

@@ -25,23 +25,39 @@ spec:
       containers:
         - name: state-generator
           image: python:3.9-slim
-          command: ["python", "-u", "/app.py"]
+          command: ["python", "-u", "/app_fixed.py"]
+          env:
+            - name: PROFILE
+              value: "burst"
           volumeMounts:
             - name: shared-storage
               mountPath: /data
             - name: app-script
-              mountPath: /app.py
-              subPath: app.py
+              mountPath: /app_fixed.py
+              subPath: app_fixed.py
               readOnly: true
         - name: sync-agent
           image: python:3.9-slim
-          command: ["python", "-u", "/adaptive_sync.py"]
+          command: ["python", "-u", "/adaptive_sync_fixed.py"]
+          env:
+            - name: SYNC_MODE
+              value: "adaptive"
+            - name: STATIC_INTERVAL
+              value: "0.5"
+            - name: W1
+              value: "0.5"
+            - name: W2
+              value: "0.5"
+            - name: KAPPA
+              value: "0.1"
+            - name: LAMBDA
+              value: "0.008333333333333333"
           volumeMounts:
             - name: shared-storage
               mountPath: /shared-volume
             - name: shared-storage
               mountPath: /data
             - name: adaptive-script
-              mountPath: /adaptive_sync.py
-              subPath: adaptive_sync.py
+              mountPath: /adaptive_sync_fixed.py
+              subPath: adaptive_sync_fixed.py
               readOnly: true

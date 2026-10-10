@@ -30,29 +30,37 @@ spec:
         - name: app-script
           configMap:
             name: app-script
-        - name: sync-script
+        - name: adaptive-script
           configMap:
-            name: sync-script
+            name: adaptive-script
       containers:
         - name: state-generator
           image: python:3.9-slim
-          command: ["python", "/app.py"]
+          command: ["python", "-u", "/app_fixed.py"]
+          env:
+            - name: PROFILE
+              value: "burst"
           volumeMounts:
             - name: shared-storage
               mountPath: /data
             - name: app-script
-              mountPath: /app.py
-              subPath: app.py
+              mountPath: /app_fixed.py
+              subPath: app_fixed.py
               readOnly: true
         - name: sync-agent
-          image: busybox
-          command: ["/bin/sh", "/sync.sh"]
+          image: python:3.9-slim
+          command: ["python", "-u", "/adaptive_sync_fixed.py"]
+          env:
+            - name: SYNC_MODE
+              value: "static"
+            - name: STATIC_INTERVAL
+              value: "30"
           volumeMounts:
             - name: shared-storage
               mountPath: /shared-volume
             - name: shared-storage
               mountPath: /data
-            - name: sync-script
-              mountPath: /sync.sh
-              subPath: sync.sh
+            - name: adaptive-script
+              mountPath: /adaptive_sync_fixed.py
+              subPath: adaptive_sync_fixed.py
               readOnly: true
