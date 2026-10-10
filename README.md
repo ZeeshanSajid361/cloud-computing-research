@@ -10,10 +10,10 @@ The project compares a static 30-second synchronization policy with a telemetry-
 
 - `adaptive_sync.py` — telemetry-driven adaptive sync controller
 - `adaptive_deploy.yaml` — deployment for adaptive scheduling
-- `Point 1 Setup and Reproduce/app.py` — baseline state generator
-- `Point 1 Setup and Reproduce/sync.sh` — baseline static sync worker
-- `Point 1 Setup and Reproduce/baseline-deploy.yaml` — baseline deployment
-- `Point 1 Setup and Reproduce/fault-injection.yaml` — Chaos Mesh fault schedule
+- `app.py` — baseline state generator
+- `sync.sh` — baseline static sync worker
+- `baseline-deploy.yaml` — baseline deployment
+- `fault-injection.yaml` — Chaos Mesh fault schedule
 
 ## Verification results
 
@@ -65,8 +65,6 @@ helm upgrade --install chaos-mesh chaos-mesh/chaos-mesh --namespace chaos-mesh -
 From the project root:
 
 ```powershell
-Set-Location "D:\Samester 07\Cloud Computing\D2\Point 1 Setup and Reproduce"
-
 kubectl create configmap app-script --from-file=app.py --dry-run=client -o yaml | kubectl apply -f -
 kubectl create configmap sync-script --from-file=sync.sh --dry-run=client -o yaml | kubectl apply -f -
 kubectl apply -f baseline-deploy.yaml
@@ -100,11 +98,9 @@ docker exec $node sh -c "tail -n 1 /var/lib/rancher/k3s/storage/pvc-*/synced_sta
 From the project root:
 
 ```powershell
-Set-Location "D:\Samester 07\Cloud Computing\D2"
-
 kubectl create configmap adaptive-script --from-file=adaptive_sync.py --dry-run=client -o yaml | kubectl apply -f -
 kubectl apply -f adaptive_deploy.yaml
-kubectl apply -f "Point 1 Setup and Reproduce\fault-injection.yaml"
+kubectl apply -f fault-injection.yaml
 ```
 
 ### 2) Watch the adaptive synchronization logic
